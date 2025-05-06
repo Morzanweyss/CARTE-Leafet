@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Carte TIFF</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style> #map { height: 100vh; } </style>
+</head>
+<body>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/georaster"></script>
+<script src="https://unpkg.com/georaster-layer-for-leaflet"></script>
+
+<script>
+  var map = L.map('map').setView([LATITUDE, LONGITUDE], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+  fetch('ton_fichier.tif') // doit être un COG ou hébergé sur un serveur public
+    .then(response => response.arrayBuffer())
+    .then(buffer => {
+      parseGeoraster(buffer).then(georaster => {
+        var layer = new GeoRasterLayer({ georaster, opacity: 0.7 });
+        map.addLayer(layer);
+        map.fitBounds(layer.getBounds());
+      });
+    });
+</script>
+</body>
+</html>
