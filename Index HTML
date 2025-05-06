@@ -17,7 +17,7 @@
   var map = L.map('map').setView([LATITUDE, LONGITUDE], 13);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-  fetch('ton_fichier.tif') // doit être un COG ou hébergé sur un serveur public
+  fetch('https://drive.google.com/file/d/1FjKRWNfkGaoa1_XFUANCwztY6ilvxNtT/view?usp=sharing') // doit être un COG ou hébergé sur un serveur public
     .then(response => response.arrayBuffer())
     .then(buffer => {
       parseGeoraster(buffer).then(georaster => {
